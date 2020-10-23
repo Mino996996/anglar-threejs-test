@@ -20,3 +20,4 @@
 ><script src="assets/hello.js"></script>
 4.app.ts内で型定義したのちに、呼び出す
 >declare var ChangeItem: any;
+# anglar-threejs-test
