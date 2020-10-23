@@ -17,8 +17,8 @@ export class PcdViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.threeService.createScene(this.renderCanvas);
-
+    this.threeService.createScene();
+    // this.threeService.animate();
   }
 
 }

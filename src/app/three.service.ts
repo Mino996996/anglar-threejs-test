@@ -53,8 +53,8 @@ export class ThreeService implements OnDestroy {
     }
   }
 
-  createScene(canvas: ElementRef): void {
-    this.canvas = canvas.nativeElement;
+  createScene(): void {
+    // this.canvas = canvas.nativeElement;
 
     this.scene = new Scene();
     this.camera = new PerspectiveCamera(
@@ -110,7 +110,7 @@ export class ThreeService implements OnDestroy {
     this.camera.position.x = -30;
     this.camera.position.y = 40;
     this.camera.position.z = 30;
-    this.camera.lookAt(this.scene.position);
+    // this.camera.lookAt(this.scene.position);
     this.controls.update();
 
     const geometry = this.geom;
@@ -148,22 +148,34 @@ export class ThreeService implements OnDestroy {
 
     document.getElementById("WebGL-output").appendChild(this.renderer.domElement);
 
-    // this.renderer.render(this.scene, this.camera);
+    this.renderer.render(this.scene, this.camera);
 
-    // this.tick();
+    this.tick();
   }
 
+  tick() {
+    requestAnimationFrame(() => {
+      this.tick();
+    });
+
+    // Required for updating during animations.
+    this.controls.update();
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  /*
   // 毎フレーム時に実行されるループイベントです
-  animate(): void {
-    this.ngZone.runOutsideAngular(() => {
-      window.addEventListener('DOMContentLoaded', () => {
-        this.render();
-      });
+  tick(): void {
+    // this.ngZone.runOutsideAngular(() => {
+    //   window.addEventListener('DOMContentLoaded', () => {
+    //     this.render();
+    //   });
       window.addEventListener('resize', () => {
         this.resize();
       });
     });
   }
+  */
 
   render() {
     this.frameId = requestAnimationFrame(() => {
@@ -174,14 +186,14 @@ export class ThreeService implements OnDestroy {
     this.renderer.render(this.scene, this.camera);
   }
 
-  resize() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+  // resize() {
+  //   const width = window.innerWidth;
+  //   const height = window.innerHeight;
 
-    this.camera.aspect = width / height;
-    this.camera.updateProjectionMatrix();
+  //   this.camera.aspect = width / height;
+  //   this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(width, height);
-  }
+  //   this.renderer.setSize(width, height);
+  // }
 
 }
