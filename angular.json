@@ -30,7 +30,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/stats.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -123,6 +125,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pcdloader-test"
+    }
+  },
+  "defaultProject": "pcdloader-test",
+  "cli": {
+    "analytics": "50c0498f-4507-4713-9420-48d0e53af1c0"
+  }
 }
