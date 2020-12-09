@@ -8,7 +8,7 @@ import { ThreeService } from '../three.service';
 })
 export class PcdViewComponent implements OnInit {
 
-  @ViewChild('rendererCanvas', { static: true })
+  @ViewChild('renderCanvas', { static: true })
 
   public renderCanvas: ElementRef<HTMLCanvasElement>;
 
@@ -17,7 +17,7 @@ export class PcdViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.threeService.createScene();
+    this.threeService.createScene(this.renderCanvas);
     // this.threeService.animate();
   }
 

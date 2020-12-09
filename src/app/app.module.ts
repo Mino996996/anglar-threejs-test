@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PcdViewComponent } from './pcd-view/pcd-view.component';
+import { TestInterfaceComponent } from './test-interface/test-interface.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PcdViewComponent
+    PcdViewComponent,
+    TestInterfaceComponent
   ],
   imports: [
     BrowserModule,
