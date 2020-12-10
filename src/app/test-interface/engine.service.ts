@@ -1,16 +1,20 @@
 import * as THREE from 'three';
 import { Injectable, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { Vector3, Object3D, Font } from 'three';
+import TrackballControls from 'three-trackballcontrols';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class EngineService implements OnDestroy {
+
+  // 各変数と型定義
   private canvas: HTMLCanvasElement;
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
   private scene: THREE.Scene;
+  private geometry: THREE.Geometry;
 
 
   private light: THREE.AmbientLight;

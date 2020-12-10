@@ -1,4 +1,5 @@
 import { Injectable, ElementRef, OnDestroy, NgZone } from '@angular/core';
+import { generate } from 'rxjs';
 
 import * as THREE from 'three';
 import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, SpotLight, Mesh, Vector3, Points, PointsMaterial, PlaneGeometry, MeshLambertMaterial, BoxGeometry, SphereGeometry, Geometry, Color } from 'three';
@@ -52,7 +53,7 @@ export class ThreeService implements OnDestroy {
       antialias: true
     });
     this.renderer.setClearColor(new THREE.Color(0xEEEEEE));
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(window.innerWidth, window.innerHeight / 2);
 
     this.controls = new TrackballControls(this.camera, this.renderer.domElement);
 
@@ -82,9 +83,11 @@ export class ThreeService implements OnDestroy {
 
     const material = new PointsMaterial({
       // 一つ一つのサイズ
-      // size: 1,
+      size: 1,
       // 色
       // color: 0xffff00
+      opacity: 0.6,
+      transparent: true,
       vertexColors: true
     });
 
