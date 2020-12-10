@@ -2,7 +2,7 @@ import { Injectable, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { generate } from 'rxjs';
 
 import * as THREE from 'three';
-import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, SpotLight, Mesh, Vector3, Points, PointsMaterial, PlaneGeometry, MeshLambertMaterial, BoxGeometry, SphereGeometry, Geometry, Color } from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer, AxesHelper, SpotLight, Mesh, Vector3, Points, PointsMaterial, PlaneGeometry, MeshLambertMaterial, BoxGeometry, SphereGeometry, Geometry, Color, Sphere, Sprite } from 'three';
 import TrackballControls from 'three-trackballcontrols';
 
 declare function Stats(): void;
@@ -21,6 +21,8 @@ export class ThreeService implements OnDestroy {
   step: number = 0;
   public newStats = new Stats();
   controls;
+
+  // private sprite: THREE.TextureLoader;
 
   Data: any[] = [
     [3, 3, 3, 0, 0, 0],
@@ -81,13 +83,16 @@ export class ThreeService implements OnDestroy {
     }
     console.log(geometry);
 
+    const sprite = new THREE.TextureLoader().load('../assets/disc.png');
+
     const material = new PointsMaterial({
       // 一つ一つのサイズ
       size: 1,
       // 色
       // color: 0xffff00
-      opacity: 0.6,
+      opacity: 0.8,
       transparent: true,
+      map: sprite,
       vertexColors: true
     });
 

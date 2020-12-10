@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Injectable, ElementRef, OnDestroy, NgZone } from '@angular/core';
-import { Vector3, Object3D, Font } from 'three';
+import { Vector3, Object3D, Font, PLYLoader } from 'three';
 import TrackballControls from 'three-trackballcontrols';
 
 @Injectable({
@@ -14,20 +14,21 @@ export class EngineService implements OnDestroy {
   private renderer: THREE.WebGLRenderer;
   private camera: THREE.PerspectiveCamera;
   private scene: THREE.Scene;
-  private geometry: THREE.Geometry;
+  private material: THREE.PointsMaterial;
 
+  // テクスチャローダー
+  private sprite: THREE.TextureLoader;
 
-  private light: THREE.AmbientLight;
-  private lightDirec: THREE.DirectionalLight;
+  // ply読込用
+  private loader: THREE.PLYLoader;
 
-  private cubeHead: THREE.Mesh;
-  private cubeLeftHand: THREE.Mesh;
-  private cubeRightHand: THREE.Mesh;
-  private cone: THREE.Mesh;
+  // トラックボールコントローラーは型のd.ts無し
+  private controls;
+
+  // 表示点群
+  private pointsGroup;
 
   private objGroup: THREE.Group;
-  private isRotate: boolean;
-
   private frameId: number = null;
 
   // ngZoneはDOMイベントにおける非同期更新を可能にするZone.jsをAngularに入れたもの
@@ -39,26 +40,34 @@ export class EngineService implements OnDestroy {
     }
   }
 
+
+  /*
+    実行メソッドcreateSceneを作る
+    引数に表示させるエリアのcanvas要素を持たせる。
+    なおcanvas要素の取得にはAngularのviewchildを使うと便利
+  */
   createScene(canvas: ElementRef<HTMLCanvasElement>): void {
-    // HTML要素からcanvas情報を取得する
+
+    /*
+    1.HTML要素からcanvas情報を取得する
+    */
     this.canvas = canvas.nativeElement;
 
-    // rendererの基本構成を記述
+    /*
+    2.rendererの基本構成を記述＆canvas要素を追加
+    */
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       alpha: true,    // 背景を透明にする
       antialias: true // エッジを滑らかにする
     });
-    this.renderer.setSize(window.innerWidth, window.innerHeight); //描画サイズ
+    this.renderer.setSize(window.innerWidth, window.innerHeight / 2); //描画サイズ
     // this.renderer.setPixelRatio(window.devicePixelRatio); // ピクセル比
+    this.renderer.setClearColor(new THREE.Color(0xEEEEEE));
 
-    // シーンを作成
-    this.scene = new THREE.Scene();
-
-    // 表示ポリゴンをグループ化するため、グループを作成
-    this.objGroup = new THREE.Group();
-
-    // カメラの配置（視野角、アス比、接近表示範囲、遠方表示範囲）
+    /*
+    3.カメラの配置（視野角、アス比、接近表示範囲、遠方表示範囲）
+    */
     this.camera = new THREE.PerspectiveCamera(
       75, window.innerWidth / window.innerHeight, 0.1, 1000
     );
@@ -66,49 +75,47 @@ export class EngineService implements OnDestroy {
     this.scene.add(this.camera);
 
     /*
-    // 環境光源
-    this.light = new THREE.AmbientLight(0x404040);
-    this.light.position.z = 10;
-    this.scene.add(this.light);
-
-    // 平行光源
-    this.lightDirec = new THREE.DirectionalLight(0xFFFFFF, 1);
-    this.lightDirec.position.set(0, 10, 10);
-    this.scene.add(this.lightDirec);
-
-    // 頭？
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const loader = new THREE.TextureLoader();
-    const texture = loader.load('assets/img/tex1.png');
-    const material = new THREE.MeshStandardMaterial({ map: texture });
-    this.cubeHead = new THREE.Mesh(geometry, material);
-    this.cubeHead.position.x = 2;
-
-    // 左手？
-    const geoLeftHand = new THREE.BoxGeometry(0.6, 0.1, 0.1);
-    const matLeftHand = new THREE.MeshStandardMaterial({ color: 0x004f00 });
-    this.cubeLeftHand = new THREE.Mesh(geoLeftHand, matLeftHand);
-    this.cubeLeftHand.position.x = 1.3;
-
-    // 右手？
-    const geoRightHand = new THREE.BoxGeometry(0.6, 0.1, 0.1);
-    const matRightHand = new THREE.MeshStandardMaterial({ color: 0x004f00 });
-    this.cubeRightHand = new THREE.Mesh(geoRightHand, matRightHand);
-    this.cubeRightHand.position.x = 2.8;
-
-    // 胴体？
-    const geoCone = new THREE.ConeGeometry(1, 2, 8);
-    const matCone = new THREE.MeshStandardMaterial({ color: 0x774f77 });
-    this.cone = new THREE.Mesh(geoCone, matCone);
-    this.cone.position.x = 2;
-    this.cone.position.y = -1;
-
-    // 頭・左手・右手のグループ化
-    this.objGroup.add(this.cubeHead, this.cubeLeftHand, this.cubeRightHand, this.cone);
+    4.カメラとレンダラーが設定できたのでマウス操作に対応させる
     */
+    this.controls = new TrackballControls(this.camera, this.renderer.domElement);
+    this.controls.update();
 
-    // シーン追加
-    this.scene.add(this.objGroup);
+    /*
+    5.シーンを作成
+    */
+    this.scene = new THREE.Scene();
+
+    /*
+    6.PLYを読み込んで頂点を作成する
+    */
+    const texture = this.sprite.load('../assets/disc.png'); //球体のテクスチャを読み込む
+    this.loader.load('../../assets/1606807986_data.ply', (geometry) => {
+
+      /*
+      6-1.マテリアルの条件を指定
+      */
+      this.material = new THREE.PointsMaterial({
+        size: 1, // サイズ
+        // color: 0xffff00
+        opacity: 0.8, // ポイントの透過度
+        transparent: true, //透過表示の有無
+        map: texture, // テクスチャ（外観・形を指定）
+        vertexColors: true // 頂点の固有色を採用する falseだとここのcolorで色指定
+      });
+
+      /*
+      6-2.点群を設定
+      */
+      this.pointsGroup = new THREE.Points(geometry, this.material);
+      this.pointsGroup.sortParticles = true;
+
+      /*
+      6-3.シーン追加
+      */
+      this.scene.add(this.pointsGroup);
+    });
+
+    // this.objGroup = new THREE.Group();
   }
 
   animate(): void {
@@ -132,19 +139,12 @@ export class EngineService implements OnDestroy {
     this.frameId = requestAnimationFrame(() => {
       this.render();
     });
-
-
+    // コントローラーに対応
+    this.controls.update();
     // ブラウザ毎にfps処理間隔が異なるので秒ベースに換算する
     // ミリ秒から秒に変換
     const sec = performance.now() / 1000;
-
-    // VTuberを1秒毎に45°回す
-    if (this.isRotate) {
-      this.objGroup.rotation.x = sec * (Math.PI / 4);
-    }
-
-    // 画面に表示
-    this.renderer.render(this.scene, this.camera);
+    this.renderer.render(this.scene, this.camera); // 画面に表示
   }
 
   resize() {
@@ -155,16 +155,6 @@ export class EngineService implements OnDestroy {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
-  }
-
-  rotate() {
-    // 回転オン
-    this.isRotate = true;
-  }
-
-  rotateOff() {
-    // 回転オフ
-    this.isRotate = false;
   }
 
 }
