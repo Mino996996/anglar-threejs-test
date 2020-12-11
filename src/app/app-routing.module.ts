@@ -5,7 +5,7 @@ import { TestInterfaceComponent } from './test-interface/test-interface.componen
 
 
 const routes: Routes = [
-  { path: '', component: PcdViewComponent }
+  { path: '', component: TestInterfaceComponent }
 ];
 
 @NgModule({

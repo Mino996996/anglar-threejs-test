@@ -11,11 +11,13 @@ export class TestInterfaceComponent implements OnInit {
   @ViewChild('rendererCanvas', { static: true })
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
-  constructor(private engServ: EngineService) { }
+  constructor(
+    private engServ: EngineService
+  ) { }
 
   ngOnInit() {
     this.engServ.createScene(this.rendererCanvas);
-    this.engServ.animate();
+    // this.engServ.animate();
   }
 
 }

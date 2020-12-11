@@ -1,7 +1,9 @@
-import * as THREE from 'three';
+import * as THREE from 'three-full';
 import { Injectable, ElementRef, OnDestroy, NgZone } from '@angular/core';
-import { Vector3, Object3D, Font, PLYLoader } from 'three';
 import TrackballControls from 'three-trackballcontrols';
+
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +19,10 @@ export class EngineService implements OnDestroy {
   private material: THREE.PointsMaterial;
 
   // テクスチャローダー
-  private sprite: THREE.TextureLoader;
+  private texture: THREE.TextureLoader;
 
   // ply読込用
-  private loader: THREE.PLYLoader;
+  private plyLoader: THREE.PLYLoader
 
   // トラックボールコントローラーは型のd.ts無し
   private controls;
@@ -54,68 +56,83 @@ export class EngineService implements OnDestroy {
     this.canvas = canvas.nativeElement;
 
     /*
-    2.rendererの基本構成を記述＆canvas要素を追加
+    2.レンダラー基本構成を記述＆canvas要素を追加
     */
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       alpha: true,    // 背景を透明にする
       antialias: true // エッジを滑らかにする
     });
-    this.renderer.setSize(window.innerWidth, window.innerHeight / 2); //描画サイズ
+    this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7); //描画サイズ
     // this.renderer.setPixelRatio(window.devicePixelRatio); // ピクセル比
-    this.renderer.setClearColor(new THREE.Color(0xEEEEEE));
+    this.renderer.setClearColor(new THREE.Color(0x000000));
 
     /*
-    3.カメラの配置（視野角、アス比、接近表示範囲、遠方表示範囲）
+    3.シーンを作成
+    */
+    this.scene = new THREE.Scene();
+
+    /*
+    4.カメラ基本構成を記述（視野角、アス比、接近表示範囲、遠方表示範囲）
     */
     this.camera = new THREE.PerspectiveCamera(
-      75, window.innerWidth / window.innerHeight, 0.1, 1000
+      75, window.innerWidth / window.innerHeight, 0.1, 4000
     );
-    this.camera.position.z = 5;
+    this.camera.position.z = 20;
     this.scene.add(this.camera);
 
     /*
-    4.カメラとレンダラーが設定できたのでマウス操作に対応させる
+    5.カメラとレンダラーが設定できたのでマウス操作に対応させる
     */
     this.controls = new TrackballControls(this.camera, this.renderer.domElement);
     this.controls.update();
 
     /*
-    5.シーンを作成
+    6.シーンを作成
     */
     this.scene = new THREE.Scene();
 
     /*
-    6.PLYを読み込んで頂点を作成する
+    7.PLYを読み込んで頂点を作成する
     */
-    const texture = this.sprite.load('../assets/disc.png'); //球体のテクスチャを読み込む
-    this.loader.load('../../assets/1606807986_data.ply', (geometry) => {
+    this.texture = new THREE.TextureLoader();
+    this.plyLoader = new THREE.PLYLoader();
+    const sprite = this.texture.load('../assets/disc.png'); //球体のテクスチャを読み込む
+    this.plyLoader.load('../../assets/1606807986_data.ply', (geometry) => {
 
       /*
-      6-1.マテリアルの条件を指定
+      7-1.マテリアルの条件を指定
       */
       this.material = new THREE.PointsMaterial({
         size: 1, // サイズ
         // color: 0xffff00
         opacity: 0.8, // ポイントの透過度
         transparent: true, //透過表示の有無
-        map: texture, // テクスチャ（外観・形を指定）
+        // map: sprite, // テクスチャ（外観・形を指定）
         vertexColors: true // 頂点の固有色を採用する falseだとここのcolorで色指定
       });
 
       /*
-      6-2.点群を設定
+      7-2.点群を設定
       */
       this.pointsGroup = new THREE.Points(geometry, this.material);
       this.pointsGroup.sortParticles = true;
 
       /*
-      6-3.シーン追加
+      7-3.シーン追加
       */
       this.scene.add(this.pointsGroup);
     });
 
-    // this.objGroup = new THREE.Group();
+    /*
+    8.レンダラーにシーンとカメラの情報を渡す
+    */
+    this.renderer.render(this.scene, this.camera);
+
+    /*
+    マウス操作を反映させるメソッドを追加
+    */
+    this.tick();
   }
 
   animate(): void {
@@ -155,6 +172,16 @@ export class EngineService implements OnDestroy {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(width, height);
+  }
+
+  tick() {
+    requestAnimationFrame(() => {
+      this.tick();
+    });
+
+    // Required for updating during animations.
+    this.controls.update();
+    this.renderer.render(this.scene, this.camera);
   }
 
 }

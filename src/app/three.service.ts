@@ -102,7 +102,7 @@ export class ThreeService implements OnDestroy {
     console.log(mesh);
     this.scene.add(mesh);
 
-    document.getElementById("WebGL-output").appendChild(this.renderer.domElement);
+    // document.getElementById("WebGL-output").appendChild(this.renderer.domElement);
 
     this.renderer.render(this.scene, this.camera);
 
