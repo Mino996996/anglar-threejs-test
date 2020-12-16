@@ -17,7 +17,7 @@ export class TestInterfaceComponent implements OnInit {
 
   ngOnInit() {
     this.engServ.createScene(this.rendererCanvas);
-    // this.engServ.animate();
+    this.engServ.animate();
   }
 
 }

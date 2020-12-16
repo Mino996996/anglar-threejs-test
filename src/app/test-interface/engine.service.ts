@@ -98,13 +98,13 @@ export class EngineService implements OnDestroy {
     this.texture = new THREE.TextureLoader();
     this.plyLoader = new THREE.PLYLoader();
     const sprite = this.texture.load('../assets/disc.png'); //球体のテクスチャを読み込む
-    this.plyLoader.load('../../assets/1606807986_data.ply', (geometry) => {
+    this.plyLoader.load('../../assets/Photoneo.ply', (geometry) => {
 
       /*
       7-1.マテリアルの条件を指定
       */
       this.material = new THREE.PointsMaterial({
-        size: 1, // サイズ
+        size: 0.8, // サイズ
         // color: 0xffff00
         opacity: 0.8, // ポイントの透過度
         transparent: true, //透過表示の有無
@@ -171,7 +171,7 @@ export class EngineService implements OnDestroy {
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(width, height);
+    this.renderer.setSize(width, height * 0.7);
   }
 
   tick() {
