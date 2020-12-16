@@ -8,6 +8,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 })
 export class TestInterfaceComponent implements OnInit {
 
+  private sidePanel: number = 400;
+
   @ViewChild('rendererCanvas', { static: true })
   public rendererCanvas: ElementRef<HTMLCanvasElement>;
 
@@ -16,8 +18,8 @@ export class TestInterfaceComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.engServ.createScene(this.rendererCanvas);
-    this.engServ.animate();
+    this.engServ.createScene(this.rendererCanvas, this.sidePanel);
+    this.engServ.animate(this.sidePanel);
   }
 
 }

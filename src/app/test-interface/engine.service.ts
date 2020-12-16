@@ -48,7 +48,7 @@ export class EngineService implements OnDestroy {
     引数に表示させるエリアのcanvas要素を持たせる。
     なおcanvas要素の取得にはAngularのviewchildを使うと便利
   */
-  createScene(canvas: ElementRef<HTMLCanvasElement>): void {
+  createScene(canvas: ElementRef<HTMLCanvasElement>, sidePanelSize: number): void {
 
     /*
     1.HTML要素からcanvas情報を取得する
@@ -63,7 +63,7 @@ export class EngineService implements OnDestroy {
       alpha: true,    // 背景を透明にする
       antialias: true // エッジを滑らかにする
     });
-    this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7); //描画サイズ
+    this.renderer.setSize(window.innerWidth - sidePanelSize, window.innerHeight * 0.7); //描画サイズ
     // this.renderer.setPixelRatio(window.devicePixelRatio); // ピクセル比
     this.renderer.setClearColor(new THREE.Color(0x000000));
 
@@ -135,7 +135,7 @@ export class EngineService implements OnDestroy {
     this.tick();
   }
 
-  animate(): void {
+  animate(sidePanelSize: number): void {
     // 自動検知を外したいのでAngular zoneの外で実行させて、変更検知をトリガーさせない
     // 変更検知してinit()関数内の他のメソッドを実行されると重くなるのでこれで回避
     this.ngZone.runOutsideAngular(() => {
@@ -145,7 +145,7 @@ export class EngineService implements OnDestroy {
 
       //画面のリサイズ対応
       window.addEventListener('resize', () => {
-        this.resize();
+        this.resize(sidePanelSize);
       });
     });
   }
@@ -164,14 +164,14 @@ export class EngineService implements OnDestroy {
     this.renderer.render(this.scene, this.camera); // 画面に表示
   }
 
-  resize() {
+  resize(sidePanelSize: number) {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(width, height * 0.7);
+    this.renderer.setSize(width - sidePanelSize, height * 0.7);
   }
 
   tick() {

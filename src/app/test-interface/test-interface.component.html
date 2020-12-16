@@ -1,24 +1,12 @@
-<mat-drawer-container class="example-container">
-
-  <div class="example-sidenav-content">
-    <div class="header-area">
-      <p>this is test-interface</p>
-      <button type="button" mat-button (click)="drawer.toggle()">
-        Parameter
-      </button>
-    </div>
-
+<div class="container">
+  <p>this is test-interface</p>
+  <div class="main">
     <div class="engine-wrapper">
       <canvas #rendererCanvas></canvas>
-      <div id="WebGL-output">
-      </div>
+    </div>
+    <div class="controler" [style.width]="panelSize" ]>
+      piyopiyo
     </div>
   </div>
 
-
-
-  <mat-drawer #drawer class="example-sidenav" mode="over" position="end">
-    <p>Auto-resizing sidenav</p>
-  </mat-drawer>
-
-</mat-drawer-container>
+  <!-- </div> -->
