@@ -1,12 +1,33 @@
 <div class="container">
   <p>this is test-interface</p>
-  <div class="main">
+  <div class="main-view">
     <div class="engine-wrapper">
       <canvas #rendererCanvas></canvas>
     </div>
-    <div class="controler" [style.width]="panelSize" ]>
-      piyopiyo
+    <div class="control-panel">
+      <nav>
+        <button (click)="toggleEditor('camera')">カメラ</button>
+        <button (click)="toggleEditor('recog')">認識</button>
+      </nav>
+      <app-camera-params *ngIf="showCameraParams"></app-camera-params>
+      <app-recog-params *ngIf="showRecogParams"></app-recog-params>
     </div>
   </div>
-
-  <!-- </div> -->
+  <div class="buttuo-area">
+    <div class="camera-button">
+      <button>カメラ設定</button>
+      <button (click)="runCamera()">カメラ撮影</button>
+      <button (click)="makeCameraPCD()">カメラ点群取得</button>
+    </div>
+    <div class="recognize-button">
+      <button>認識設定送信</button>
+      <button (click)="runRecog()">認識実行</button>
+      <button (click)="makeRecogPCD()">認識点群取得</button>
+    </div>
+    <button (click)="setCommand()">セットコマンド1</button>
+    <button (click)="connectTest()">接続テスト</button>
+    <div class="ply-button">
+      <input type="file" id="plyFile" accept=".ply" />
+    </div>
+  </div>
+</div>

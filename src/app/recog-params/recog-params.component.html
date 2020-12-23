@@ -1,0 +1,120 @@
+<form [formGroup]="BoxRecogParam" (ngSubmit)="onSubmit()">
+  <div formGroupName="BoxParam">
+    <h3>BoxParam</h3>
+    <label>
+      Boxthickness:
+      <input type="text" formControlName="Boxthickness" required>
+    </label>
+    <label>
+      BoxOutWidth:
+      <input type="text" formControlName="BoxOutWidth" required>
+    </label>
+    <label>
+      BoxOutHeight:
+      <input type="text" formControlName="BoxOutHeight" required>
+    </label>
+    <label>
+      ModelStep:
+      <input type="text" formControlName="ModelStep" required>
+    </label>
+    <label>
+      ModelBoxDepth:
+      <input type="text" formControlName="ModelBoxDepth" required>
+    </label>
+    <label>
+      ModelBoxDepth:
+      <input type="text" formControlName="ModelBoxDepth" required>
+    </label>
+    <label>
+      zDirection:
+      <input type="text" formControlName="zDirection" required>
+    </label>
+  </div>
+  <label>
+    SceneLeafSize:
+    <input type="text" formControlName="SceneLeafSize" required>
+  </label>
+  <label>
+    PlaneNormalAngle:
+    <input type="text" formControlName="PlaneNormalAngle" required>
+  </label>
+  <label>
+    PlaneDistanceThreshold:
+    <input type="text" formControlName="PlaneDistanceThreshold" required>
+  </label>
+  <label>
+    EdgePointDelete_Step:
+    <input type="text" formControlName="EdgePointDelete_Step" required>
+  </label>
+  <label>
+    LineDistanceThreshold:
+    <input type="text" formControlName="LineDistanceThreshold" required>
+  </label>
+  <label>
+    LineIntegrationDistance:
+    <input type="text" formControlName="LineIntegrationDistance" required>
+  </label>
+  <label>
+    BoxEdgeFormedAngleThreshold:
+    <input type="text" formControlName="BoxEdgeFormedAngleThreshold" required>
+  </label>
+  <label>
+    BoxLengthErrorThreshold:
+    <input type="text" formControlName="BoxLengthErrorThreshold" required>
+  </label>
+  <label>
+    BoxPointRadius:
+    <input type="text" formControlName="BoxPointRadius" required>
+  </label>
+  <label>
+    BoxFramePointRate:
+    <input type="text" formControlName="BoxFramePointRate" required>
+  </label>
+  <label>
+    MaxBoxRecogNum:
+    <input type="text" formControlName="MaxBoxRecogNum" required>
+  </label>
+  <label>
+    VoxelPointNumThreshold:
+    <input type="text" formControlName="VoxelPointNumThreshold" required>
+  </label>
+  <label>
+    VoxelXSize:
+    <input type="text" formControlName="VoxelXSize" required>
+  </label>
+  <label>
+    VoxelYSize:
+    <input type="text" formControlName="VoxelYSize" required>
+  </label>
+  <label>
+    VoxelZSize:
+    <input type="text" formControlName="VoxelZSize" required>
+  </label>
+
+  <div formGroupName="ICPParam">
+    <h3>ICPParam</h3>
+    <label>
+      icp_maxIterations:
+      <input type="text" formControlName="icp_maxIterations" required>
+    </label>
+    <label>
+      icp_euclideanFitnessEpsilon:
+      <input type="text" formControlName="icp_euclideanFitnessEpsilon" required>
+    </label>
+    <label>
+      icp_thresScore:
+      <input type="text" formControlName="icp_thresScore" required>
+    </label>
+  </div>
+
+  <button type="submit" [disabled]="!BoxRecogParam.valid">パラメータ送信</button>
+</form>
+
+<p>
+  Form Value: {{ BoxRecogParam.value | json }}
+</p>
+
+
+<p>
+  Form Status: {{ BoxRecogParam.status }}
+</p>

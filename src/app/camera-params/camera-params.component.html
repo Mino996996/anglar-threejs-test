@@ -1,0 +1,48 @@
+<form [formGroup]="LucidCameraParam" (ngSubmit)="onSubmit()">
+  <label>
+    ConfidenceThresholdEnable:
+    <input type="text" formControlName="ConfidenceThresholdEnable" required>
+  </label>
+  <label>
+    ConfidenceThresholdMin:
+    <input type="text" formControlName="ConfidenceThresholdMin" required>
+  </label>
+  <div formGroupName="ROIParam">
+    <h3>ROIParam</h3>
+    <label>
+      ROI_MinX:
+      <input type="text" formControlName="ROI_MinX" required>
+    </label>
+    <label>
+      ROI_MinY:
+      <input type="text" formControlName="ROI_MinY" required>
+    </label>
+    <label>
+      ROI_MinZ:
+      <input type="text" formControlName="ROI_MinZ" required>
+    </label>
+    <label>
+      ROI_MaxX:
+      <input type="text" formControlName="ROI_MaxX" required>
+    </label>
+    <label>
+      ROI_MaxY:
+      <input type="text" formControlName="ROI_MaxY" required>
+    </label>
+    <label>
+      ROI_MaxZ:
+      <input type="text" formControlName="ROI_MaxZ" required>
+    </label>
+  </div>
+
+  <button type="submit" [disabled]="!LucidCameraParam.valid">パラメータ送信</button>
+</form>
+
+<p>
+  Form Value: {{ LucidCameraParam.value | json }}
+</p>
+
+
+<p>
+  Form Status: {{ LucidCameraParam.status }}
+</p>

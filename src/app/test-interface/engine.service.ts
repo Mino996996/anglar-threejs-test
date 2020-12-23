@@ -98,18 +98,18 @@ export class EngineService implements OnDestroy {
     this.texture = new THREE.TextureLoader();
     this.plyLoader = new THREE.PLYLoader();
     const sprite = this.texture.load('../assets/disc.png'); //球体のテクスチャを読み込む
-    this.plyLoader.load('../../assets/Photoneo.ply', (geometry) => {
+    this.plyLoader.load('../../assets/LUCID.ply', (geometry) => {
 
       /*
       7-1.マテリアルの条件を指定
       */
       this.material = new THREE.PointsMaterial({
-        size: 0.8, // サイズ
-        // color: 0xffff00
-        opacity: 0.8, // ポイントの透過度
+        size: 2, // サイズ
+        color: 0xffffff,
+        opacity: 1, // ポイントの透過度
         transparent: true, //透過表示の有無
         // map: sprite, // テクスチャ（外観・形を指定）
-        vertexColors: true // 頂点の固有色を採用する falseだとここのcolorで色指定
+        vertexColors: false // 頂点の固有色を採用する falseだとここのcolorで色指定
       });
 
       /*
