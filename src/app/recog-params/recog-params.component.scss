@@ -1,3 +1,35 @@
+h1,
+h2,
+h3,
+h4,
+h4,
+h5,
+p,
+ul,
+li,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  font-weight: bold;
+  line-height: 1.4rem;
+}
+
 label {
   display: block;
+
+  span {
+    display: inline-block;
+    width: 220px;
+  }
+  input {
+    width: 80px;
+  }
+  p {
+    display: inline-block;
+    margin-left: 20px;
+    width: 60px;
+  }
 }

@@ -112,4 +112,17 @@ export class TestInterfaceComponent implements OnInit {
     });
   }
 
+  connectTest2() {
+    const jsonDemo = { "id": 3, "name": "mino" };
+    const body = JSON.stringify(jsonDemo);
+    console.log(body);
+
+    this.eventService.connectTest2(body).subscribe((data) => {
+      if (data) {
+        window.alert(data);
+      } else {
+        window.alert("命令に対する応答がありません");
+      }
+    });
+  }
 }

@@ -44,7 +44,8 @@ export class EventService {
   }
 
   sendRecogParams(body): Observable<any> {
-    return this.http.post<any>(this.recogParamsUrl, body, httpOptions);
+    return this.http.post<any>(this.connectTestUrl, body, httpOptions);
+    // return this.http.post<any>(this.recogParamsUrl, body, httpOptions);
   }
 
   sendRecogParamsDemo(): Observable<any> {
@@ -65,6 +66,10 @@ export class EventService {
 
   connectTest(): Observable<any> {
     return this.http.get<any>(this.connectTestUrl);
+  }
+
+  connectTest2(body): Observable<any> {
+    return this.http.post<any>(this.connectTestUrl, body, httpOptions);
   }
 
 }

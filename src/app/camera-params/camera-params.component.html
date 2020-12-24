@@ -1,48 +1,57 @@
 <form [formGroup]="LucidCameraParam" (ngSubmit)="onSubmit()">
   <label>
-    ConfidenceThresholdEnable:
+    <span>ConfidenceThresholdEnable:</span>
     <input type="text" formControlName="ConfidenceThresholdEnable" required>
+    <p>{{Lucid.ConfidenceThresholdEnable}}</p>
   </label>
   <label>
-    ConfidenceThresholdMin:
+    <span>ConfidenceThresholdMin:</span>
     <input type="text" formControlName="ConfidenceThresholdMin" required>
+    <p>{{Lucid.ConfidenceThresholdMin}}</p>
   </label>
   <div formGroupName="ROIParam">
     <h3>ROIParam</h3>
     <label>
-      ROI_MinX:
+      <span>ROI_MinX:</span>
       <input type="text" formControlName="ROI_MinX" required>
+      <p>{{Lucid.ROIParam.ROI_MinX}}</p>
     </label>
     <label>
-      ROI_MinY:
+      <span>ROI_MinY:</span>
       <input type="text" formControlName="ROI_MinY" required>
+      <p>{{Lucid.ROIParam.ROI_MinX}}</p>
     </label>
     <label>
-      ROI_MinZ:
+      <span>ROI_MinZ:</span>
       <input type="text" formControlName="ROI_MinZ" required>
+      <p>{{Lucid.ROIParam.ROI_MinZ}}</p>
     </label>
     <label>
-      ROI_MaxX:
+      <span>ROI_MaxX:</span>
       <input type="text" formControlName="ROI_MaxX" required>
+      <p>{{Lucid.ROIParam.ROI_MaxX}}</p>
     </label>
     <label>
-      ROI_MaxY:
+      <span>ROI_MaxY:</span>
       <input type="text" formControlName="ROI_MaxY" required>
+      <p>{{Lucid.ROIParam.ROI_MaxY}}</p>
     </label>
     <label>
-      ROI_MaxZ:
+      <span>ROI_MaxZ:</span>
       <input type="text" formControlName="ROI_MaxZ" required>
+      <p>{{Lucid.ROIParam.ROI_MaxZ}}</p>
     </label>
   </div>
 
   <button type="submit" [disabled]="!LucidCameraParam.valid">パラメータ送信</button>
+  <!-- <button type="submit" (click)="checkScore()">スコア確認</button> -->
 </form>
 
-<p>
+<!-- <p>
   Form Value: {{ LucidCameraParam.value | json }}
-</p>
+</p> -->
 
 
-<p>
+<h3>
   Form Status: {{ LucidCameraParam.status }}
-</p>
+</h3>
