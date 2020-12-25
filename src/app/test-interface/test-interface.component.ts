@@ -82,6 +82,16 @@ export class TestInterfaceComponent implements OnInit {
     });
   }
 
+  getRecogResult() {
+    this.eventService.getRecogResult().subscribe((data) => {
+      if (data) {
+        window.alert(`認識命令を送信しました ID:${data.id}`);
+      } else {
+        window.alert("認識命令に対する応答がありません");
+      }
+    });
+  }
+
   makeRecogPCD() {
     this.eventService.makeRecogPCD().subscribe((data) => {
       if (data) {

@@ -44,7 +44,6 @@
   </div>
 
   <button type="submit" [disabled]="!LucidCameraParam.valid">パラメータ送信</button>
-  <!-- <button type="submit" (click)="checkScore()">スコア確認</button> -->
 </form>
 
 <!-- <p>
@@ -55,3 +54,5 @@
 <h3>
   Form Status: {{ LucidCameraParam.status }}
 </h3>
+<h3>パラメータ：カメラ側</h3>
+<button type="submit" (click)="fetchCameraParams()">設定値確認</button>
