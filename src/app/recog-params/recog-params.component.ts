@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { EventService } from '../event.service';
+import { RECG_PARAMS } from '../modeltypes';
+import { ParamsSetService } from '../params-set.service';
+
 
 @Component({
   selector: 'app-recog-params',
@@ -10,166 +13,149 @@ import { EventService } from '../event.service';
 })
 export class RecogParamsComponent implements OnInit {
 
-  BoxRecog = {
+  //サービスから初期値取得
+  public recogParams = this.paramsService.recogParams;
+  public info = this.paramsService.recogParamsInfo;
+
+  //パラメータ初期値
+  firstParams:RECG_PARAMS = {
     BoxParam: {
-      Boxthickness: "",
-      BoxOutWidth: "",
-      BoxOutHeight: "",
-      ModelStep: "",
-      ModelBoxDepth: "",
-      zDirection: ""
+      Boxthickness: this.recogParams.BoxParam[0].value,
+      BoxOutWidth: this.recogParams.BoxParam[1].value,
+      BoxOutHeight: this.recogParams.BoxParam[2].value,
+      ModelStep: this.recogParams.BoxParam[3].value,
+      ModelBoxDepth: this.recogParams.BoxParam[4].value,
+      zDirection: this.recogParams.BoxParam[5].value,
     },
-    SceneLeafSize: "",
-    PlaneNormalAngle: "",
-    PlaneDistanceThreshold: "",
-    EdgePointDelete_Step: "",
-    LineDistanceThreshold: "",
-    LineIntegrationDistance: "",
-    BoxEdgeFormedAngleThreshold: "",
-    BoxLengthErrorThreshold: "",
-    BoxPointRadius: "",
-    BoxFramePointRate: "",
-    MaxBoxRecogNum: "",
-    VoxelPointNumThreshold: "",
-    VoxelXSize: "",
-    VoxelYSize: "",
-    VoxelZSize: "",
+    SceneLeafSize: this.recogParams.SceneLeafSize.value,
+    PlaneNormalAngle: this.recogParams.PlaneNormalAngle.value,
+    PlaneDistanceThreshold: this.recogParams.PlaneDistanceThreshold.value,
+    EdgePointDelete_Step: this.recogParams.EdgePointDelete_Step.value,
+    LineDistanceThreshold: this.recogParams.LineDistanceThreshold.value,
+    BoxEdgeFormedAngleThreshold: this.recogParams.BoxLengthErrorThreshold.value,
+    BoxLengthErrorThreshold: this.recogParams.BoxLengthErrorThreshold.value,
+    BoxPointRadius: this.recogParams.BoxPointRadius.value,
+    BoxFramePointRate: this.recogParams.BoxFramePointRate.value,
+    MaxBoxRecogNum: this.recogParams.MaxBoxRecogNum.value,
+    VoxelPointNumThreshold: this.recogParams.VoxelPointNumThreshold.value,
+    VoxelXSize: this.recogParams.VoxelXSize.value,
+    VoxelYSize: this.recogParams.VoxelYSize.value,
+    VoxelZSize: this.recogParams.VoxelZSize.value,
     ICPParam: {
-      icp_maxIterations: "",
-      icp_euclideanFitnessEpsilon: "",
-      icp_thresScore: ""
+      icp_maxIterations: this.recogParams.ICPParam[0].value,
+      icp_euclideanFitnessEpsilon: this.recogParams.ICPParam[1].value,
+      icp_thresScore: this.recogParams.ICPParam[2].value
     }
   };
 
+  //設定値変数
+  recog: RECG_PARAMS;
+
+  //フォームの変数
+  paramsNum: RECG_PARAMS;
+
+  //フォームグループ設定
   BoxRecogParam = this.fb.group({
     BoxParam: this.fb.group({
-      Boxthickness: ['18', Validators.required],
-      BoxOutWidth: ['335', Validators.required],
-      BoxOutHeight: ['670', Validators.required],
-      ModelStep: ['2', Validators.required],
-      ModelBoxDepth: ['15', Validators.required],
-      zDirection: ['-1', Validators.required]
+      Boxthickness: ['', Validators.required],
+      BoxOutWidth: ['', Validators.required],
+      BoxOutHeight: ['', Validators.required],
+      ModelStep: ['', Validators.required],
+      ModelBoxDepth: ['', Validators.required],
+      zDirection: ['', Validators.required]
     }),
-    SceneLeafSize: ['1', Validators.required],
-    PlaneNormalAngle: ['15', Validators.required],
-    PlaneDistanceThreshold: ['15', Validators.required],
-    EdgePointDelete_Step: ['3', Validators.required],
-    LineDistanceThreshold: ['2', Validators.required],
-    LineIntegrationDistance: ['3', Validators.required],
-    BoxEdgeFormedAngleThreshold: ['10', Validators.required],
-    BoxLengthErrorThreshold: ['15', Validators.required],
-    BoxPointRadius: ['5', Validators.required],
-    BoxFramePointRate: ['0.5', Validators.required],
-    MaxBoxRecogNum: ['4', Validators.required],
-    VoxelPointNumThreshold: ['10', Validators.required],
-    VoxelXSize: ['50', Validators.required],
-    VoxelYSize: ['50', Validators.required],
-    VoxelZSize: ['50', Validators.required],
+    SceneLeafSize: ['', Validators.required],
+    PlaneNormalAngle: ['', Validators.required],
+    PlaneDistanceThreshold: ['', Validators.required],
+    EdgePointDelete_Step: ['', Validators.required],
+    LineDistanceThreshold: ['', Validators.required],
+    BoxEdgeFormedAngleThreshold: ['', Validators.required],
+    BoxLengthErrorThreshold: ['', Validators.required],
+    BoxPointRadius: ['', Validators.required],
+    BoxFramePointRate: ['', Validators.required],
+    MaxBoxRecogNum: ['', Validators.required],
+    VoxelPointNumThreshold: ['', Validators.required],
+    VoxelXSize: ['', Validators.required],
+    VoxelYSize: ['', Validators.required],
+    VoxelZSize: ['', Validators.required],
     ICPParam: this.fb.group({
-      icp_maxIterations: ['40', Validators.required],
-      icp_euclideanFitnessEpsilon: ['0.001', Validators.required],
-      icp_thresScore: ['25', Validators.required]
+      icp_maxIterations: ['', Validators.required],
+      icp_euclideanFitnessEpsilon: ['', Validators.required],
+      icp_thresScore: ['', Validators.required]
     }),
   });
 
   constructor(
     private fb: FormBuilder,
-    private eventService: EventService
+    private eventService: EventService,
+    private paramsService :ParamsSetService,
   ) { }
 
   ngOnInit(): void {
+    this.recog = this.firstParams;
+    this.paramsNum = this.firstParams;
   };
 
+  
+  /*
+  イベント用メソッド
+  */
+  
+  //フォーム送信
   onSubmit() {
-    const params = JSON.stringify(this.BoxRecogParam.value);
-    this.eventService.sendRecogParamsDemo().subscribe(() => {
+    const formParams: RECG_PARAMS = this.BoxRecogParam.value;
+    const params = JSON.stringify(formParams);
+    console.log(params);
+    this.eventService.sendRecogParams(params).subscribe(() => {
       window.alert("認識用パラメータを送信しました");
+      this.modifyObject(formParams); //送信時にオブジェクトの値を更新
     });
-    // console.warn(params);
   };
-  // onSubmit() {
-  //   const params = JSON.stringify(this.BoxRecogParam.value);
-  //   this.eventService.sendRecogParams(params).subscribe(() => {
-  //     window.alert("認識用パラメータを送信しました");
-  //   });
-  //   console.warn(params);
-  // }
 
-  /* カメラ側の設定値確認 */
+  //認識パラメータ取得
   fetchRecogParams() {
     this.eventService.fetchRecogParams().subscribe((data) => {
+      // const paramData:RECG_PARAMS = JSON.parse(data);
       const paramData = JSON.parse(data)
       console.log(paramData);
       if (data) {
         window.alert("パラメータを取得しました")
-
-        // this.BoxRecogParam.value.BoxParam.Boxthickness = paramData.this.BoxRecogParam.value.BoxParam.Boxthickness;
-        // this.BoxRecogParam.value.BoxParam.BoxOutWidth = this.BoxRecogParam.value.BoxParam.BoxOutWidth;
-        // this.BoxRecogParam.value.BoxParam.BoxOutHeight = this.BoxRecogParam.value.BoxParam.BoxOutHeight;
-        // this.BoxRecogParam.value.BoxParam.ModelStep = this.BoxRecogParam.value.BoxParam.ModelStep;
-        // this.BoxRecogParam.value.BoxParam.ModelBoxDepth = this.BoxRecogParam.value.BoxParam.ModelBoxDepth;
-        // this.BoxRecogParam.value.BoxParam.zDirection = this.BoxRecogParam.value.BoxParam.zDirection;
-        // this.BoxRecogParam.value.SceneLeafSize = this.BoxRecogParam.value.SceneLeafSize;
-        // this.BoxRecogParam.value.PlaneNormalAngle = this.BoxRecogParam.value.PlaneNormalAngle;
-        // this.BoxRecogParam.value.PlaneDistanceThreshold = this.BoxRecogParam.value.PlaneDistanceThreshold;
-        // this.BoxRecogParam.value.EdgePointDelete_Step = this.BoxRecogParam.value.EdgePointDelete_Step;
-        // this.BoxRecogParam.value.LineDistanceThreshold = this.BoxRecogParam.value.LineDistanceThreshold;
-        // this.BoxRecogParam.value.LineIntegrationDistance = this.BoxRecogParam.value.LineIntegrationDistance;
-        // this.BoxRecogParam.value.BoxEdgeFormedAngleThreshold = this.BoxRecogParam.value.BoxEdgeFormedAngleThreshold;
-        // this.BoxRecogParam.value.BoxLengthErrorThreshold = this.BoxRecogParam.value.BoxLengthErrorThreshold;
-        // this.BoxRecogParam.value.BoxPointRadius = this.BoxRecogParam.value.BoxPointRadius;
-        // this.BoxRecogParam.value.BoxFramePointRate = this.BoxRecogParam.value.BoxFramePointRate;
-        // this.BoxRecogParam.value.MaxBoxRecogNum = this.BoxRecogParam.value.MaxBoxRecogNum;
-        // this.BoxRecogParam.value.VoxelPointNumThreshold = this.BoxRecogParam.value.VoxelPointNumThreshold;
-        // this.BoxRecogParam.value.VoxelXSize = this.BoxRecogParam.value.VoxelXSize;
-        // this.BoxRecogParam.value.VoxelYSize = this.BoxRecogParam.value.VoxelYSize;
-        // this.BoxRecogParam.value.VoxelZSize = this.BoxRecogParam.value.VoxelZSize;
-        // this.BoxRecogParam.value.ICPParam.icp_maxIterations = this.BoxRecogParam.value.ICPParam.icp_maxIterations;
-        // this.BoxRecogParam.value.ICPParam.icp_euclideanFitnessEpsilon = this.BoxRecogParam.value.ICPParam.icp_euclideanFitnessEpsilon;
-        // this.BoxRecogParam.value.ICPParam.icp_thresScore = this.BoxRecogParam.value.ICPParam.icp_thresScore;
-
-
-        // this.Lucid.ConfidenceThresholdEnable = paramData.LucidCameraParam.ConfidenceThresholdEnable;
-        // this.Lucid.ConfidenceThresholdMin = paramData.LucidCameraParam.ConfidenceThresholdMin;
-        // this.Lucid.ROIParam.ROI_MinX = paramData.LucidCameraParam.ROIParam.ROI_MinX;
-        // this.Lucid.ROIParam.ROI_MinY = paramData.LucidCameraParam.ROIParam.ROI_MinY;
-        // this.Lucid.ROIParam.ROI_MinZ = paramData.LucidCameraParam.ROIParam.ROI_MinZ;
-        // this.Lucid.ROIParam.ROI_MaxX = paramData.LucidCameraParam.ROIParam.ROI_MaxX;
-        // this.Lucid.ROIParam.ROI_MaxY = paramData.LucidCameraParam.ROIParam.ROI_MaxY;
-        // this.Lucid.ROIParam.ROI_MaxZ = paramData.LucidCameraParam.ROIParam.ROI_MaxZ;
       }
     });
   };
 
-  checkParamsScore() {
-    // console.log(this.BoxRecogParam.value.ConfidenceThresholdEnable);
-    this.BoxRecog.BoxParam.Boxthickness = this.BoxRecogParam.value.BoxParam.Boxthickness;
-    this.BoxRecog.BoxParam.BoxOutWidth = this.BoxRecogParam.value.BoxParam.BoxOutWidth;
-    this.BoxRecog.BoxParam.BoxOutHeight = this.BoxRecogParam.value.BoxParam.BoxOutHeight;
-    this.BoxRecog.BoxParam.ModelStep = this.BoxRecogParam.value.BoxParam.ModelStep;
-    this.BoxRecog.BoxParam.ModelBoxDepth = this.BoxRecogParam.value.BoxParam.ModelBoxDepth;
-    this.BoxRecog.BoxParam.zDirection = this.BoxRecogParam.value.BoxParam.zDirection;
-    this.BoxRecog.SceneLeafSize = this.BoxRecogParam.value.SceneLeafSize;
-    this.BoxRecog.PlaneNormalAngle = this.BoxRecogParam.value.PlaneNormalAngle;
-    this.BoxRecog.PlaneDistanceThreshold = this.BoxRecogParam.value.PlaneDistanceThreshold;
-    this.BoxRecog.EdgePointDelete_Step = this.BoxRecogParam.value.EdgePointDelete_Step;
-    this.BoxRecog.LineDistanceThreshold = this.BoxRecogParam.value.LineDistanceThreshold;
-    this.BoxRecog.LineIntegrationDistance = this.BoxRecogParam.value.LineIntegrationDistance;
-    this.BoxRecog.BoxEdgeFormedAngleThreshold = this.BoxRecogParam.value.BoxEdgeFormedAngleThreshold;
-    this.BoxRecog.BoxLengthErrorThreshold = this.BoxRecogParam.value.BoxLengthErrorThreshold;
-    this.BoxRecog.BoxPointRadius = this.BoxRecogParam.value.BoxPointRadius;
-    this.BoxRecog.BoxFramePointRate = this.BoxRecogParam.value.BoxFramePointRate;
-    this.BoxRecog.MaxBoxRecogNum = this.BoxRecogParam.value.MaxBoxRecogNum;
-    this.BoxRecog.VoxelPointNumThreshold = this.BoxRecogParam.value.VoxelPointNumThreshold;
-    this.BoxRecog.VoxelXSize = this.BoxRecogParam.value.VoxelXSize;
-    this.BoxRecog.VoxelYSize = this.BoxRecogParam.value.VoxelYSize;
-    this.BoxRecog.VoxelZSize = this.BoxRecogParam.value.VoxelZSize;
-    this.BoxRecog.ICPParam.icp_maxIterations = this.BoxRecogParam.value.ICPParam.icp_maxIterations;
-    this.BoxRecog.ICPParam.icp_euclideanFitnessEpsilon = this.BoxRecogParam.value.ICPParam.icp_euclideanFitnessEpsilon;
-    this.BoxRecog.ICPParam.icp_thresScore = this.BoxRecogParam.value.ICPParam.icp_thresScore;
-  };
-  paramCheck() {
-    window.alert("OK");
-  };
+  //初期値に戻す
+  returnFirstParams() {
+    this.setFirstObject();
+    this.setFirstFormParams();
+  }
+
+  //現在の設定値に戻す
+  returnParams() {
+    this.modifyFormParams(this.recog);
+  }
+
+
+
+  /*
+  各モジュール
+  */
+  
+  //オブジェクト初期値
+  setFirstObject() {
+    this.recog = this.firstParams;
+  }
+  //フォーム初期値
+  setFirstFormParams() {    
+    this.paramsNum = this.firstParams;
+  }
+  //オブジェクトのパラメータ更新
+  modifyObject(parameter:RECG_PARAMS) {
+    this.recog = parameter;
+  } 
+  //フォームのパラメータ更新
+  modifyFormParams(parameter:RECG_PARAMS) {
+    this.paramsNum = parameter;
+  }
 
 }

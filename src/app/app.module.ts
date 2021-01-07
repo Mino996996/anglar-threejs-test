@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 //Angular Material
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 //Components
 import { AppComponent } from './app.component';
@@ -32,7 +34,9 @@ import { CameraParamsComponent } from './camera-params/camera-params.component';
     BrowserAnimationsModule,
     MatSidenavModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTooltipModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

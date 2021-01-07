@@ -35,12 +35,14 @@ export class EventService {
   */
 
   // テスト用
+  /*
   sendCameraParamsDemo(): Observable<any> {
     return this.http.get<any>(this.sendCameraParamsUrl);
   };
   sendRecogParamsDemo(): Observable<any> {
     return this.http.get<any>(this.sendRecogParamsUrl);
   };
+  */
 
   /* カメラ側 */
   sendCameraParams(body): Observable<any> {
@@ -58,7 +60,7 @@ export class EventService {
 
   /* 認識側 */
   sendRecogParams(body): Observable<any> {
-    return this.http.post<any>(this.connectTestUrl, body, httpOptions);
+    return this.http.post<any>(this.sendRecogParamsUrl, body, httpOptions);
     // return this.http.post<any>(this.recogParamsUrl, body, httpOptions);
   };
   fetchRecogParams(): Observable<any> {

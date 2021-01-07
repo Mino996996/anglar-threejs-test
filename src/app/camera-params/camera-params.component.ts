@@ -1,8 +1,9 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { EventService } from '../event.service';
+import { LUCID, CAMERA } from '../modeltypes';
+import { ParamsSetService } from '../params-set.service';
 
 @Component({
   selector: 'app-camera-params',
@@ -11,90 +12,115 @@ import { EventService } from '../event.service';
 })
 export class CameraParamsComponent implements OnInit {
 
+  //サービスから初期値取得
+  public camera1 = this.paramsService.camera1;
 
-  Lucid = {
-    ConfidenceThresholdEnable: "",
-    ConfidenceThresholdMin: "",
+  //パラメーター初期値
+  firstParams:LUCID= {
+    ConfidenceThresholdEnable: this.camera1.ConfidenceThresholdEnable.value,
+    ConfidenceThresholdMin: this.camera1.ConfidenceThresholdMin.value,
     ROIParam: {
-      ROI_MinX: "",
-      ROI_MinY: "",
-      ROI_MinZ: "",
-      ROI_MaxX: "",
-      ROI_MaxY: "",
-      ROI_MaxZ: ""
+      ROI_MinX: this.camera1.ROIParam[0].value,
+      ROI_MinY: this.camera1.ROIParam[1].value,
+      ROI_MinZ: this.camera1.ROIParam[2].value,
+      ROI_MaxX: this.camera1.ROIParam[3].value,
+      ROI_MaxY: this.camera1.ROIParam[4].value,
+      ROI_MaxZ: this.camera1.ROIParam[5].value
     }
   };
 
+  //設定値変数
+  lucid1: LUCID;
 
-  LucidCameraParam = this.fb.group({
-    ConfidenceThresholdEnable: ['1', Validators.required],
-    ConfidenceThresholdMin: ['500', Validators.required],
+  //フォームの変数
+  paramsNum: LUCID;
+
+  //フォームグループ設定
+  formParams = this.fb.group({
+    ConfidenceThresholdEnable:["", Validators.required],
+    ConfidenceThresholdMin: ["", Validators.required],
     ROIParam: this.fb.group({
-      ROI_MinX: ['-5000', Validators.required],
-      ROI_MinY: ['-5000', Validators.required],
-      ROI_MinZ: ['-5000', Validators.required],
-      ROI_MaxX: ['5000', Validators.required],
-      ROI_MaxY: ['5000', Validators.required],
-      ROI_MaxZ: ['5000', Validators.required]
+      ROI_MinX: ["", Validators.required],
+      ROI_MinY: ["", Validators.required],      
+      ROI_MinZ: ["", Validators.required],
+      ROI_MaxX: ["", Validators.required],
+      ROI_MaxY: ["", Validators.required],
+      ROI_MaxZ: ["", Validators.required]
     }),
   });
 
-
   constructor(
     private fb: FormBuilder,
-    private eventService: EventService
+    private eventService: EventService,
+    private paramsService :ParamsSetService,
   ) { }
 
+
   ngOnInit(): void {
+    this.lucid1 = this.firstParams;
+    this.paramsNum = this.firstParams;
   }
 
-
-  // onSubmit() {
-  //   const params = JSON.stringify(this.LucidCameraParam.value);
-  //   this.eventService.sendCameraParamsDemo().subscribe(() => {
-  //     window.alert("カメラのパラメータを送信しました");
-  //   });
-  //   console.warn(params);
-  // };
-
+  
+  /*
+  イベント用メソッド
+  */
+  
+  //フォーム送信
   onSubmit() {
-    const params = JSON.stringify(this.LucidCameraParam.value);
+    const formParams: LUCID = this.formParams.value;
+    const params = JSON.stringify(formParams);
     console.log(params);
     this.eventService.sendCameraParams(params).subscribe(() => {
       window.alert("カメラのパラメータを送信しました");
+      this.modifyObject(formParams); //送信時にオブジェクトの値を更新
     });
-    // console.warn(params);
   }
 
-  /* カメラ側の設定値確認 */
+  //カメラパラメータ取得
   fetchCameraParams() {
     this.eventService.fetchCameraParams().subscribe((data) => {
-      const paramData = JSON.parse(data)
+      const paramData:LUCID = JSON.parse(data).LucidCameraParam;
       console.log(paramData);
       if (data) {
-        window.alert("パラメータを取得しました")
-        this.Lucid.ConfidenceThresholdEnable = paramData.LucidCameraParam.ConfidenceThresholdEnable;
-        this.Lucid.ConfidenceThresholdMin = paramData.LucidCameraParam.ConfidenceThresholdMin;
-        this.Lucid.ROIParam.ROI_MinX = paramData.LucidCameraParam.ROIParam.ROI_MinX;
-        this.Lucid.ROIParam.ROI_MinY = paramData.LucidCameraParam.ROIParam.ROI_MinY;
-        this.Lucid.ROIParam.ROI_MinZ = paramData.LucidCameraParam.ROIParam.ROI_MinZ;
-        this.Lucid.ROIParam.ROI_MaxX = paramData.LucidCameraParam.ROIParam.ROI_MaxX;
-        this.Lucid.ROIParam.ROI_MaxY = paramData.LucidCameraParam.ROIParam.ROI_MaxY;
-        this.Lucid.ROIParam.ROI_MaxZ = paramData.LucidCameraParam.ROIParam.ROI_MaxZ;
+        window.alert("パラメータを取得しました");
+        this.modifyFormParams(paramData); //取得時にフォームの値を更新
+        this.modifyObject(paramData); //送信時にオブジェクトの値を更新
       }
     });
   };
 
-  checkParamsScore() {
-    console.log(this.LucidCameraParam.value.ConfidenceThresholdEnable);
-    this.Lucid.ConfidenceThresholdEnable = this.LucidCameraParam.value.ConfidenceThresholdEnable;
-    this.Lucid.ConfidenceThresholdMin = this.LucidCameraParam.value.ConfidenceThresholdMin;
-    this.Lucid.ROIParam.ROI_MinX = this.LucidCameraParam.value.ROIParam.ROI_MinX;
-    this.Lucid.ROIParam.ROI_MinY = this.LucidCameraParam.value.ROIParam.ROI_MinY;
-    this.Lucid.ROIParam.ROI_MinZ = this.LucidCameraParam.value.ROIParam.ROI_MinZ;
-    this.Lucid.ROIParam.ROI_MaxX = this.LucidCameraParam.value.ROIParam.ROI_MaxX;
-    this.Lucid.ROIParam.ROI_MaxY = this.LucidCameraParam.value.ROIParam.ROI_MaxY;
-    this.Lucid.ROIParam.ROI_MaxZ = this.LucidCameraParam.value.ROIParam.ROI_MaxZ;
-  };
+  //初期値に戻す
+  returnFirstParams() {
+    this.setFirstObject();
+    this.setFirstFormParams();
+  }
+
+  //現在の設定値に戻す
+  returnParams() {
+    this.modifyFormParams(this.lucid1);
+  }
+
+
+  /*
+  各モジュール
+  */
+  
+  //オブジェクト初期値
+  setFirstObject() {
+    this.lucid1 = this.firstParams;
+  }
+  //フォーム初期値
+  setFirstFormParams() {    
+    this.paramsNum = this.firstParams;
+  }
+  //オブジェクトのパラメータ更新
+  modifyObject(parameter:LUCID) {
+    this.lucid1 = parameter;
+  } 
+  //フォームのパラメータ更新
+  modifyFormParams(parameter:LUCID) {
+    this.paramsNum = parameter;
+  }
 
 }

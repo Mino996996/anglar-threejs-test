@@ -98,7 +98,7 @@ export class EngineService implements OnDestroy {
     this.texture = new THREE.TextureLoader();
     this.plyLoader = new THREE.PLYLoader();
     const sprite = this.texture.load('../assets/disc.png'); //球体のテクスチャを読み込む
-    this.plyLoader.load('../../assets/1608881360_data.ply', (geometry) => {
+    this.plyLoader.load('../../assets/LUCID.ply', (geometry) => {
 
       /*
       7-1.マテリアルの条件を指定
