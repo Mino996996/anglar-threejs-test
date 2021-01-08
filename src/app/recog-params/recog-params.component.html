@@ -4,122 +4,122 @@
 
     <label>
       <span matTooltip="{{info[0]}}" matTooltipPosition="after">Boxthickness:</span>
-      <input type="text" formControlName="Boxthickness" [(ngModel)]="paramsNum.BoxParam.Boxthickness" required>
-      <p>{{recog.BoxParam.Boxthickness}}</p>
+      <input type="text" formControlName="Boxthickness" [(ngModel)]="recogFormParams.BoxParam.Boxthickness" required>
+      <p>{{nowRecogParams.BoxParam.Boxthickness}}</p>
     </label>
     <label>
       <span matTooltip="{{info[1]}}" matTooltipPosition="after">BoxOutWidth:</span>
-      <input type="text" formControlName="BoxOutWidth" [(ngModel)]="paramsNum.BoxParam.BoxOutWidth" required>
-      <p>{{recog.BoxParam.BoxOutWidth}}</p>
+      <input type="text" formControlName="BoxOutWidth" [(ngModel)]="recogFormParams.BoxParam.BoxOutWidth" required>
+      <p>{{nowRecogParams.BoxParam.BoxOutWidth}}</p>
     </label>
     <label>
       <span matTooltip="{{info[2]}}" matTooltipPosition="after">BoxOutHeight:</span>
-      <input type="text" formControlName="BoxOutHeight" [(ngModel)]="paramsNum.BoxParam.BoxOutHeight" required>
-      <p>{{recog.BoxParam.BoxOutHeight}}</p>
+      <input type="text" formControlName="BoxOutHeight" [(ngModel)]="recogFormParams.BoxParam.BoxOutHeight" required>
+      <p>{{nowRecogParams.BoxParam.BoxOutHeight}}</p>
     </label>
     <label>
       <span matTooltip="{{info[3]}}" matTooltipPosition="after">ModelStep:</span>
-      <input type="text" formControlName="ModelStep" [(ngModel)]="paramsNum.BoxParam.ModelStep" required>
-      <p>{{recog.BoxParam.ModelStep}}</p>
+      <input type="text" formControlName="ModelStep" [(ngModel)]="recogFormParams.BoxParam.ModelStep" required>
+      <p>{{nowRecogParams.BoxParam.ModelStep}}</p>
     </label>
     <label>
       <span matTooltip="{{info[4]}}" matTooltipPosition="after">ModelBoxDepth:</span>
-      <input type="text" formControlName="ModelBoxDepth" [(ngModel)]="paramsNum.BoxParam.ModelBoxDepth" required>
-      <p>{{recog.BoxParam.ModelBoxDepth}}</p>
+      <input type="text" formControlName="ModelBoxDepth" [(ngModel)]="recogFormParams.BoxParam.ModelBoxDepth" required>
+      <p>{{nowRecogParams.BoxParam.ModelBoxDepth}}</p>
     </label>
     <label>
       <span matTooltip="{{info[5]}}" matTooltipPosition="after">zDirection:</span>
-      <input type="text" formControlName="zDirection" [(ngModel)]="paramsNum.BoxParam.zDirection" required>
-      <p>{{recog.BoxParam.zDirection}}</p>
+      <input type="text" formControlName="zDirection" [(ngModel)]="recogFormParams.BoxParam.zDirection" required>
+      <p>{{nowRecogParams.BoxParam.zDirection}}</p>
     </label>
   </div>
   <label>
     <span matTooltip="{{info[6]}}" matTooltipPosition="after">SceneLeafSize:</span>
-    <input type="text" formControlName="SceneLeafSize" [(ngModel)]="paramsNum.SceneLeafSize" required>
-    <p>{{recog.SceneLeafSize}}</p>
+    <input type="text" formControlName="SceneLeafSize" [(ngModel)]="recogFormParams.SceneLeafSize" required>
+    <p>{{nowRecogParams.SceneLeafSize}}</p>
   </label>
   <label>
     <span matTooltip="{{info[7]}}" matTooltipPosition="after">PlaneNormalAngle:</span>
-    <input type="text" formControlName="PlaneNormalAngle" [(ngModel)]="paramsNum.PlaneNormalAngle" required>
-    <p>{{recog.PlaneNormalAngle}}</p>
+    <input type="text" formControlName="PlaneNormalAngle" [(ngModel)]="recogFormParams.PlaneNormalAngle" required>
+    <p>{{nowRecogParams.PlaneNormalAngle}}</p>
   </label>
   <label>
     <span matTooltip="{{info[8]}}" matTooltipPosition="after">PlaneDistanceThreshold:</span>
-    <input type="text" formControlName="PlaneDistanceThreshold" [(ngModel)]="paramsNum.PlaneDistanceThreshold" required>
-    <p>{{recog.PlaneDistanceThreshold}}</p>
+    <input type="text" formControlName="PlaneDistanceThreshold" [(ngModel)]="recogFormParams.PlaneDistanceThreshold" required>
+    <p>{{nowRecogParams.PlaneDistanceThreshold}}</p>
   </label>
   <label>
     <span matTooltip="{{info[9]}}" matTooltipPosition="after">EdgePointDelete_Step:</span>
-    <input type="text" formControlName="EdgePointDelete_Step" [(ngModel)]="paramsNum.EdgePointDelete_Step" required>
-    <p>{{recog.EdgePointDelete_Step}}</p>
+    <input type="text" formControlName="EdgePointDelete_Step" [(ngModel)]="recogFormParams.EdgePointDelete_Step" required>
+    <p>{{nowRecogParams.EdgePointDelete_Step}}</p>
   </label>
   <label>
     <span matTooltip="{{info[10]}}" matTooltipPosition="after">LineDistanceThreshold:</span>
-    <input type="text" formControlName="LineDistanceThreshold" [(ngModel)]="paramsNum.LineDistanceThreshold" required>
-    <p>{{recog.LineDistanceThreshold}}</p>
+    <input type="text" formControlName="LineDistanceThreshold" [(ngModel)]="recogFormParams.LineDistanceThreshold" required>
+    <p>{{nowRecogParams.LineDistanceThreshold}}</p>
   </label>
   <label>
     <span matTooltip="{{info[11]}}" matTooltipPosition="after">BoxEdgeFormedAngleThreshold:</span>
-    <input type="text" formControlName="BoxEdgeFormedAngleThreshold" [(ngModel)]="paramsNum.BoxEdgeFormedAngleThreshold" required>
-    <p>{{recog.BoxEdgeFormedAngleThreshold}}</p>
+    <input type="text" formControlName="BoxEdgeFormedAngleThreshold" [(ngModel)]="recogFormParams.BoxEdgeFormedAngleThreshold" required>
+    <p>{{nowRecogParams.BoxEdgeFormedAngleThreshold}}</p>
   </label>
   <label>
     <span matTooltip="{{info[12]}}" matTooltipPosition="after">BoxLengthErrorThreshold:</span>
-    <input type="text" formControlName="BoxLengthErrorThreshold" [(ngModel)]="paramsNum.BoxLengthErrorThreshold" required>
-    <p>{{recog.BoxLengthErrorThreshold}}</p>
+    <input type="text" formControlName="BoxLengthErrorThreshold" [(ngModel)]="recogFormParams.BoxLengthErrorThreshold" required>
+    <p>{{nowRecogParams.BoxLengthErrorThreshold}}</p>
   </label>
   <label>
     <span matTooltip="{{info[13]}}" matTooltipPosition="after">BoxPointRadius:</span>
-    <input type="text" formControlName="BoxPointRadius" [(ngModel)]="paramsNum.BoxPointRadius" required>
-    <p>{{recog.BoxPointRadius}}</p>
+    <input type="text" formControlName="BoxPointRadius" [(ngModel)]="recogFormParams.BoxPointRadius" required>
+    <p>{{nowRecogParams.BoxPointRadius}}</p>
   </label>
   <label>
     <span matTooltip="{{info[14]}}" matTooltipPosition="after">BoxFramePointRate:</span>
-    <input type="text" formControlName="BoxFramePointRate" [(ngModel)]="paramsNum.BoxFramePointRate" required>
-    <p>{{recog.BoxFramePointRate}}</p>
+    <input type="text" formControlName="BoxFramePointRate" [(ngModel)]="recogFormParams.BoxFramePointRate" required>
+    <p>{{nowRecogParams.BoxFramePointRate}}</p>
   </label>
   <label>
     <span matTooltip="{{info[15]}}" matTooltipPosition="after">MaxBoxRecogNum:</span>
-    <input type="text" formControlName="MaxBoxRecogNum" [(ngModel)]="paramsNum.MaxBoxRecogNum" required>
-    <p>{{recog.MaxBoxRecogNum}}</p>
+    <input type="text" formControlName="MaxBoxRecogNum" [(ngModel)]="recogFormParams.MaxBoxRecogNum" required>
+    <p>{{nowRecogParams.MaxBoxRecogNum}}</p>
   </label>
   <label>
     <span matTooltip="{{info[16]}}" matTooltipPosition="after">VoxelPointNumThreshold:</span>
-    <input type="text" formControlName="VoxelPointNumThreshold" [(ngModel)]="paramsNum.VoxelPointNumThreshold" required>
-    <p>{{recog.VoxelPointNumThreshold}}</p>
+    <input type="text" formControlName="VoxelPointNumThreshold" [(ngModel)]="recogFormParams.VoxelPointNumThreshold" required>
+    <p>{{nowRecogParams.VoxelPointNumThreshold}}</p>
   </label>
   <label>
     <span matTooltip="{{info[17]}}" matTooltipPosition="after">VoxelXSize:</span>
-    <input type="text" formControlName="VoxelXSize" [(ngModel)]="paramsNum.VoxelXSize" required>
-    <p>{{recog.VoxelXSize}}</p>
+    <input type="text" formControlName="VoxelXSize" [(ngModel)]="recogFormParams.VoxelXSize" required>
+    <p>{{nowRecogParams.VoxelXSize}}</p>
   </label>
   <label>
     <span matTooltip="{{info[18]}}" matTooltipPosition="after">VoxelYSize:</span>
-    <input type="text" formControlName="VoxelYSize" [(ngModel)]="paramsNum.VoxelYSize" required>
-    <p>{{recog.VoxelYSize}}</p>
+    <input type="text" formControlName="VoxelYSize" [(ngModel)]="recogFormParams.VoxelYSize" required>
+    <p>{{nowRecogParams.VoxelYSize}}</p>
   </label>
   <label>
     <span matTooltip="{{info[19]}}" matTooltipPosition="after">VoxelZSize:</span>
-    <input type="text" formControlName="VoxelZSize" [(ngModel)]="paramsNum.VoxelZSize" required>
-    <p>{{recog.VoxelZSize}}</p>
+    <input type="text" formControlName="VoxelZSize" [(ngModel)]="recogFormParams.VoxelZSize" required>
+    <p>{{nowRecogParams.VoxelZSize}}</p>
   </label>
 
   <div formGroupName="ICPParam">
     <h3>ICPParam</h3>
     <label>
       <span matTooltip="{{info[20]}}" matTooltipPosition="after">icp_maxIterations:</span>
-      <input type="text" formControlName="icp_maxIterations" [(ngModel)]="paramsNum.ICPParam.icp_maxIterations" required>
-      <p>{{recog.ICPParam.icp_maxIterations}}</p>
+      <input type="text" formControlName="icp_maxIterations" [(ngModel)]="recogFormParams.ICPParam.icp_maxIterations" required>
+      <p>{{nowRecogParams.ICPParam.icp_maxIterations}}</p>
     </label>
     <label>
       <span matTooltip="{{info[21]}}" matTooltipPosition="after">icp_euclideanFitnessEpsilon:</span>
-      <input type="text" formControlName="icp_euclideanFitnessEpsilon" [(ngModel)]="paramsNum.ICPParam.icp_euclideanFitnessEpsilon" required>
-      <p>{{recog.ICPParam.icp_euclideanFitnessEpsilon}}</p>
+      <input type="text" formControlName="icp_euclideanFitnessEpsilon" [(ngModel)]="recogFormParams.ICPParam.icp_euclideanFitnessEpsilon" required>
+      <p>{{nowRecogParams.ICPParam.icp_euclideanFitnessEpsilon}}</p>
     </label>
     <label>
       <span matTooltip="{{info[22]}}" matTooltipPosition="after">icp_thresScore:</span>
-      <input matTooltip="{{info[22]}}" matTooltipPosition="after" type="text" formControlName="icp_thresScore" [(ngModel)]="paramsNum.ICPParam.icp_thresScore" required>
-      <p>{{recog.ICPParam.icp_thresScore}}</p>
+      <input matTooltip="{{info[22]}}" matTooltipPosition="after" type="text" formControlName="icp_thresScore" [(ngModel)]="recogFormParams.ICPParam.icp_thresScore" required>
+      <p>{{nowRecogParams.ICPParam.icp_thresScore}}</p>
     </label>
   </div>
 
@@ -130,7 +130,10 @@
   Form Value: {{ BoxRecogParam.value | json }}
 </p> -->
 <h3>認識パラメータソフト側</h3>
-<button type="submit" (click)="fetchRecogParams()">設定値確認</button>
+<button (click)="fetchRecogParams()">ソフト設定値取得</button>
+<button (click)="returnParams()">設定値に戻す</button>
+<button (click)="returnFirstParams()">初期値に戻す</button>
+
 <h3>
   Form Status: {{ BoxRecogParam.status }}
 </h3>
